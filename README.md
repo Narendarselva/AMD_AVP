@@ -288,11 +288,8 @@ Modified and optimized version of Autoware vertical stack for AVP POC needs. Few
      <td align="center"><img src="./docs/gif/avp_summon.gif" width="100%"/>
     </td>
     </table>
-
-# Support
-
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
+ </details>
+ 
 # License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
