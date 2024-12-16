@@ -1,0 +1,9 @@
+<library path="amd_xilinx_module_mode_rviz_plugin">
+
+  <class
+    type="rviz_plugins::ModuleModePanel"
+    base_class_type="rviz_common::Panel">
+    <description>ModuleModePanel</description>
+  </class>
+
+</library>

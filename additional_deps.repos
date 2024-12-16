@@ -1,0 +1,10 @@
+repositories:
+  # NAREN for driver pacmod
+  driver/pacmod/pacmod3:
+    type: git
+    url: https://github.com/astuff/pacmod3.git
+    version: ros2_master
+  driver/pacmod/pacmod3_msgs:
+    type: git
+    url: https://github.com/astuff/pacmod3_msgs.git
+    version: main

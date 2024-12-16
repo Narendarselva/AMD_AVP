@@ -1,0 +1,188 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/dev/Naren/Autoware/x86/autoware_latest/src/deps/rviz_satellite/	//
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+Changelog for package rviz_satellite	CHANGELOG.rst	/^Changelog for package rviz_satellite$/;"	c
+3.0.2 (2020-10-13)	CHANGELOG.rst	/^3.0.2 (2020-10-13)$/;"	s	chapter:Changelog for package rviz_satellite
+3.0.1 (2020-08-03)	CHANGELOG.rst	/^3.0.1 (2020-08-03)$/;"	s	chapter:Changelog for package rviz_satellite
+3.0.0 (2020-05-26)	CHANGELOG.rst	/^3.0.0 (2020-05-26)$/;"	s	chapter:Changelog for package rviz_satellite
+2.0.0 (2020-04-17)	CHANGELOG.rst	/^2.0.0 (2020-04-17)$/;"	s	chapter:Changelog for package rviz_satellite
+1.3.0 (2020-04-17)	CHANGELOG.rst	/^1.3.0 (2020-04-17)$/;"	s	chapter:Changelog for package rviz_satellite
+1.2.0 (2019-03-07)	CHANGELOG.rst	/^1.2.0 (2019-03-07)$/;"	s	chapter:Changelog for package rviz_satellite
+1.1.0 (2018-12-04)	CHANGELOG.rst	/^1.1.0 (2018-12-04)$/;"	s	chapter:Changelog for package rviz_satellite
+1.0.0 (2018-11-08)	CHANGELOG.rst	/^1.0.0 (2018-11-08)$/;"	s	chapter:Changelog for package rviz_satellite
+rviz_satellite	CMakeLists.txt	/^project(rviz_satellite)$/;"	p
+CMAKE_C_STANDARD	CMakeLists.txt	/^  set(CMAKE_C_STANDARD 99)$/;"	v
+CMAKE_CXX_STANDARD	CMakeLists.txt	/^  set(CMAKE_CXX_STANDARD 14)$/;"	v
+QT_LIBRARIES	CMakeLists.txt	/^set(QT_LIBRARIES Qt5::Core Qt5::Gui Qt5::Network Qt5::Concurrent Qt5::Widgets)$/;"	v
+PROJECT_SOURCE_FILES	CMakeLists.txt	/^set(PROJECT_SOURCE_FILES$/;"	v
+rviz_satellite	README.md	/^# rviz_satellite$/;"	c
+Demo	README.md	/^## Demo$/;"	s	chapter:rviz_satellite
+Usage	README.md	/^## Usage$/;"	s	chapter:rviz_satellite
+Tile servers	README.md	/^## Tile servers$/;"	s	chapter:rviz_satellite
+Options	README.md	/^## Options$/;"	s	chapter:rviz_satellite
+Support and Contributions	README.md	/^## Support and Contributions$/;"	s	chapter:rviz_satellite
+MAX_BLOCKS	src/mercator.h	/^static constexpr int MAX_BLOCKS = 8;$/;"	v	typeref:typename:int
+MAX_ZOOM	src/mercator.h	/^static constexpr int MAX_ZOOM = 22;$/;"	v	typeref:typename:int
+zoomToResolution	src/mercator.h	/^inline float zoomToResolution(double lat, int zoom)$/;"	f	typeref:typename:float
+zoomToMaxTiles	src/mercator.h	/^inline int zoomToMaxTiles(int zoom)$/;"	f	typeref:typename:int
+getTileWH	src/mercator.h	/^inline double getTileWH(double const latitude, int const zoom)$/;"	f	typeref:typename:double
+OgreTile	src/ogre_tile.h	/^class OgreTile$/;"	c
+texture	src/ogre_tile.h	/^  Ogre::TexturePtr texture;$/;"	m	class:OgreTile	typeref:typename:Ogre::TexturePtr
+OgreTile	src/ogre_tile.h	/^  OgreTile(OgreTile&& other) noexcept$/;"	f	class:OgreTile
+operator =	src/ogre_tile.h	/^  OgreTile& operator=(OgreTile&& other) noexcept$/;"	f	class:OgreTile	typeref:typename:OgreTile &
+~OgreTile	src/ogre_tile.h	/^  ~OgreTile()$/;"	f	class:OgreTile
+detail	src/tile_cache_delay.h	/^namespace detail$/;"	n
+ExpiringArea	src/tile_cache_delay.h	/^struct ExpiringArea$/;"	s	namespace:detail
+timer	src/tile_cache_delay.h	/^  QTimer timer;$/;"	m	struct:detail::ExpiringArea	typeref:typename:QTimer
+area	src/tile_cache_delay.h	/^  Area area;$/;"	m	struct:detail::ExpiringArea	typeref:typename:Area
+ExpiringArea	src/tile_cache_delay.h	/^  ExpiringArea(Area area) : area(std::move(area))$/;"	f	struct:detail::ExpiringArea
+ExpiringArea	src/tile_cache_delay.h	/^  ExpiringArea(ExpiringArea const& p) : area(p.area)$/;"	f	struct:detail::ExpiringArea
+ready	src/tile_cache_delay.h	/^  bool ready(TileCacheDelay<Tile> const& cache) const$/;"	f	struct:detail::ExpiringArea	typeref:typename:bool
+operator =	src/tile_cache_delay.h	/^  ExpiringArea& operator=(ExpiringArea const& p)$/;"	f	struct:detail::ExpiringArea	typeref:typename:ExpiringArea &
+AreaHistory	src/tile_cache_delay.h	/^class AreaHistory$/;"	c	namespace:detail
+history_	src/tile_cache_delay.h	/^  std::vector<ExpiringArea> history_;$/;"	m	class:detail::AreaHistory	typeref:typename:std::vector<ExpiringArea>
+fit	src/tile_cache_delay.h	/^  void fit(Area const& area)$/;"	f	class:detail::AreaHistory	typeref:typename:void
+__anon1d2890610102	src/tile_cache_delay.h	/^                                  [&area](ExpiringArea const& p) { return !areaContainsTile(p.ar/;"	f	function:detail::AreaHistory::fit	file:
+add	src/tile_cache_delay.h	/^  void add(Area const& area)$/;"	f	class:detail::AreaHistory	typeref:typename:void
+__anon1d2890610202	src/tile_cache_delay.h	/^        std::find_if(history_.begin(), history_.end(), [&area](ExpiringArea const& p) { return p/;"	f	function:detail::AreaHistory::add	file:
+ready	src/tile_cache_delay.h	/^  bool ready(TileCacheDelay<Tile> const& cache, TileId const& to_find) const$/;"	f	class:detail::AreaHistory	typeref:typename:bool
+__anon1d2890610302	src/tile_cache_delay.h	/^    return std::any_of(history_.begin(), history_.end(), [&to_find, &cache](ExpiringArea const& /;"	f	function:detail::AreaHistory::ready	file:
+TileCacheDelay	src/tile_cache_delay.h	/^class TileCacheDelay : public TileCache<Tile>$/;"	c
+history_	src/tile_cache_delay.h	/^  detail::AreaHistory history_;$/;"	m	class:TileCacheDelay	typeref:typename:detail::AreaHistory
+request	src/tile_cache_delay.h	/^  void request(Area const& area)$/;"	f	class:TileCacheDelay	typeref:typename:void
+ready	src/tile_cache_delay.h	/^  Tile const* ready(TileId const& to_find) const$/;"	f	class:TileCacheDelay	typeref:typename:Tile const *
+Area	src/area.h	/^struct Area$/;"	s
+left_top	src/area.h	/^  TileCoordinate left_top;$/;"	m	struct:Area	typeref:typename:TileCoordinate
+right_bottom	src/area.h	/^  TileCoordinate right_bottom;$/;"	m	struct:Area	typeref:typename:TileCoordinate
+center	src/area.h	/^  TileId center;$/;"	m	struct:Area	typeref:typename:TileId
+Area	src/area.h	/^  Area(TileId center, int blocks) : center(std::move(center))$/;"	f	struct:Area
+operator ==	src/area.h	/^inline bool operator==(Area const& self, Area const& other)$/;"	f	typeref:typename:bool
+areaContainsTile	src/area.h	/^inline bool areaContainsTile(Area const& haystack, TileId const& needle)$/;"	f	typeref:typename:bool
+TileId	src/tile_id.h	/^struct TileId$/;"	s
+tile_server	src/tile_id.h	/^  std::string tile_server;$/;"	m	struct:TileId	typeref:typename:std::string
+coord	src/tile_id.h	/^  TileCoordinate coord;$/;"	m	struct:TileId	typeref:typename:TileCoordinate
+zoom	src/tile_id.h	/^  int zoom;$/;"	m	struct:TileId	typeref:typename:int
+std	src/tile_id.h	/^namespace std$/;"	n
+hash	src/tile_id.h	/^struct hash<TileId>$/;"	s	namespace:std
+operator ==	src/tile_id.h	/^inline bool operator==(TileId const& self, TileId const& other)$/;"	f	typeref:typename:bool
+TileCacheGuard	src/tile_cache.h	/^class TileCacheGuard$/;"	c
+mutex	src/tile_cache.h	/^  std::mutex& mutex;$/;"	m	class:TileCacheGuard	typeref:typename:std::mutex &
+TileCacheGuard	src/tile_cache.h	/^  TileCacheGuard(TileCache const& cache_) : mutex(cache_.cachedTilesLock)$/;"	f	class:TileCacheGuard
+~TileCacheGuard	src/tile_cache.h	/^  ~TileCacheGuard()$/;"	f	class:TileCacheGuard
+TileCache	src/tile_cache.h	/^class TileCache$/;"	c
+cached_tiles	src/tile_cache.h	/^  std::unordered_map<TileId, Tile> cached_tiles;$/;"	m	class:TileCache	typeref:typename:std::unordered_map<TileId,Tile>
+cachedTilesLock	src/tile_cache.h	/^  std::mutex mutable cachedTilesLock;$/;"	m	class:TileCache	typeref:typename:std::mutex
+downloader	src/tile_cache.h	/^  detail::TileDownloader downloader;$/;"	m	class:TileCache	typeref:typename:detail::TileDownloader
+loadedTile	src/tile_cache.h	/^  void loadedTile(TileId tile_id, QImage image)$/;"	f	class:TileCache	typeref:typename:void
+__anon514ffa530102	src/tile_cache.h	/^    : downloader([this](TileId tile_id, QImage image) { loadedTile(std::move(tile_id), std::move/;"	f	class:TileCache	file:
+TileCache	src/tile_cache.h	/^  TileCache()$/;"	f	class:TileCache
+request	src/tile_cache.h	/^  void request(Area const& area)$/;"	f	class:TileCache	typeref:typename:void
+ready	src/tile_cache.h	/^  Tile const* ready(TileId const& to_find) const$/;"	f	class:TileCache	typeref:typename:Tile const *
+purge	src/tile_cache.h	/^  void purge(Area const& area)$/;"	f	class:TileCache	typeref:typename:void
+getTileServerErrorRate	src/tile_cache.h	/^  float getTileServerErrorRate(std::string const& tile_server) const$/;"	f	class:TileCache	typeref:typename:float
+isAreaReady	src/tile_cache.h	/^  bool isAreaReady(Area const& area) const$/;"	f	class:TileCache	typeref:typename:bool
+Ogre	src/aerialmap_display.h	/^namespace Ogre$/;"	n
+rviz_common	src/aerialmap_display.h	/^namespace rviz_common::properties$/;"	n
+properties	src/aerialmap_display.h	/^namespace rviz_common::properties$/;"	n	namespace:rviz_common
+rviz	src/aerialmap_display.h	/^namespace rviz$/;"	n
+AerialMapDisplay	src/aerialmap_display.h	/^class AerialMapDisplay : public rviz_common::Display$/;"	c	namespace:rviz
+sub_odometry_	src/aerialmap_display.h	/^   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr sub_odometry_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr
+current_odom_msg_	src/aerialmap_display.h	/^   std::shared_ptr<nav_msgs::msg::Odometry> current_odom_msg_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:std::shared_ptr<nav_msgs::msg::Odometry>
+MapObject	src/aerialmap_display.h	/^  struct MapObject$/;"	s	class:rviz::AerialMapDisplay
+object	src/aerialmap_display.h	/^    Ogre::ManualObject* object;$/;"	m	struct:rviz::AerialMapDisplay::MapObject	typeref:typename:Ogre::ManualObject *
+material	src/aerialmap_display.h	/^    Ogre::MaterialPtr material;$/;"	m	struct:rviz::AerialMapDisplay::MapObject	typeref:typename:Ogre::MaterialPtr
+MapObject	src/aerialmap_display.h	/^    MapObject(Ogre::ManualObject* o, Ogre::MaterialPtr m) : object(o), material(m)$/;"	f	struct:rviz::AerialMapDisplay::MapObject
+objects_	src/aerialmap_display.h	/^  std::vector<MapObject> objects_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:std::vector<MapObject>
+navsat_fix_sub_	src/aerialmap_display.h	/^  rclcpp::Subscription< sensor_msgs::msg::NavSatFix >::SharedPtr navsat_fix_sub_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:rclcpp::Subscription<sensor_msgs::msg::NavSatFix>::SharedPtr
+topic_property_	src/aerialmap_display.h	/^  rviz_common::properties::RosTopicProperty* topic_property_ = nullptr;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:rviz_common::properties::RosTopicProperty *
+tile_url_property_	src/aerialmap_display.h	/^  rviz_common::properties::StringProperty* tile_url_property_ = nullptr;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:rviz_common::properties::StringProperty *
+zoom_property_	src/aerialmap_display.h	/^  rviz_common::properties::IntProperty* zoom_property_ = nullptr;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:rviz_common::properties::IntProperty *
+blocks_property_	src/aerialmap_display.h	/^  rviz_common::properties::IntProperty* blocks_property_ = nullptr;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:rviz_common::properties::IntProperty *
+alpha_property_	src/aerialmap_display.h	/^  rviz_common::properties::FloatProperty* alpha_property_ = nullptr;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:rviz_common::properties::FloatProperty *
+draw_under_property_	src/aerialmap_display.h	/^  rviz_common::properties::Property* draw_under_property_ = nullptr;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:rviz_common::properties::Property *
+alpha_	src/aerialmap_display.h	/^  float alpha_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:float
+draw_under_	src/aerialmap_display.h	/^  bool draw_under_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:bool
+tile_url_	src/aerialmap_display.h	/^  std::string tile_url_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:std::string
+zoom_	src/aerialmap_display.h	/^  int zoom_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:int
+blocks_	src/aerialmap_display.h	/^  int blocks_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:int
+dirty_	src/aerialmap_display.h	/^  bool dirty_{ false };$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:bool
+ref_fix_	src/aerialmap_display.h	/^  sensor_msgs::msg::NavSatFix::SharedPtr ref_fix_{ nullptr };$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:sensor_msgs::msg::NavSatFix::SharedPtr
+tile_cache_	src/aerialmap_display.h	/^  TileCacheDelay<OgreTile> tile_cache_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:TileCacheDelay<OgreTile>
+center_tile_	src/aerialmap_display.h	/^  boost::optional<TileId> center_tile_{ boost::none };$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:boost::optional<TileId>
+t_centertile_map_	src/aerialmap_display.h	/^  Ogre::Vector3 t_centertile_map_{ Ogre::Vector3::ZERO };$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:Ogre::Vector3
+MAP_FRAME	src/aerialmap_display.h	/^  std::string static const MAP_FRAME;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:std::string const
+rviz_ros_node_	src/aerialmap_display.h	/^  rviz_common::ros_integration::RosNodeAbstractionIface::WeakPtr rviz_ros_node_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:rviz_common::ros_integration::RosNodeAbstractionIface::WeakPtr
+update_profile_	src/aerialmap_display.h	/^  rclcpp::QoS update_profile_ = rclcpp::SensorDataQoS();$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:rclcpp::QoS
+tf_buffer_	src/aerialmap_display.h	/^  std::shared_ptr< tf2_ros::Buffer > tf_buffer_;$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:std::shared_ptr<tf2_ros::Buffer>
+rviz	src/aerialmap_display.cpp	/^namespace rviz$/;"	n	file:
+MAP_FRAME	src/aerialmap_display.cpp	/^std::string const AerialMapDisplay::MAP_FRAME = "base_link";$/;"	m	class:rviz::AerialMapDisplay	typeref:typename:std::string const
+AerialMapDisplay	src/aerialmap_display.cpp	/^AerialMapDisplay::AerialMapDisplay() : Display()$/;"	f	class:rviz::AerialMapDisplay
+~AerialMapDisplay	src/aerialmap_display.cpp	/^AerialMapDisplay::~AerialMapDisplay()$/;"	f	class:rviz::AerialMapDisplay
+onInitialize	src/aerialmap_display.cpp	/^void AerialMapDisplay::onInitialize()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+onOdometry	src/aerialmap_display.cpp	/^void AerialMapDisplay::onOdometry(nav_msgs::msg::Odometry::SharedPtr msg)$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+onEnable	src/aerialmap_display.cpp	/^void AerialMapDisplay::onEnable()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+onDisable	src/aerialmap_display.cpp	/^void AerialMapDisplay::onDisable()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+subscribe	src/aerialmap_display.cpp	/^void AerialMapDisplay::subscribe()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+unsubscribe	src/aerialmap_display.cpp	/^void AerialMapDisplay::unsubscribe()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+updateAlpha	src/aerialmap_display.cpp	/^void AerialMapDisplay::updateAlpha()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+updateDrawUnder	src/aerialmap_display.cpp	/^void AerialMapDisplay::updateDrawUnder()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+updateTileUrl	src/aerialmap_display.cpp	/^void AerialMapDisplay::updateTileUrl()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+updateZoom	src/aerialmap_display.cpp	/^void AerialMapDisplay::updateZoom()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+updateBlocks	src/aerialmap_display.cpp	/^void AerialMapDisplay::updateBlocks()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+updateTopic	src/aerialmap_display.cpp	/^void AerialMapDisplay::updateTopic()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+clearAll	src/aerialmap_display.cpp	/^void AerialMapDisplay::clearAll()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+destroyTileObjects	src/aerialmap_display.cpp	/^void AerialMapDisplay::destroyTileObjects()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+createTileObjects	src/aerialmap_display.cpp	/^void AerialMapDisplay::createTileObjects()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+update	src/aerialmap_display.cpp	/^void AerialMapDisplay::update(float, float)$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+navFixCallback	src/aerialmap_display.cpp	/^void AerialMapDisplay::navFixCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+updateCenterTile	src/aerialmap_display.cpp	/^void AerialMapDisplay::updateCenterTile(const sensor_msgs::msg::NavSatFix::SharedPtr msg)$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+requestTileTextures	src/aerialmap_display.cpp	/^void AerialMapDisplay::requestTileTextures()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+checkRequestErrorRate	src/aerialmap_display.cpp	/^void AerialMapDisplay::checkRequestErrorRate()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+triggerSceneAssembly	src/aerialmap_display.cpp	/^void AerialMapDisplay::triggerSceneAssembly()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+assembleScene	src/aerialmap_display.cpp	/^void AerialMapDisplay::assembleScene()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+transformTileToMapFrame	src/aerialmap_display.cpp	/^void AerialMapDisplay::transformTileToMapFrame()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+transformMapTileToFixedFrame	src/aerialmap_display.cpp	/^void AerialMapDisplay::transformMapTileToFixedFrame()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+reset	src/aerialmap_display.cpp	/^void AerialMapDisplay::reset()$/;"	f	class:rviz::AerialMapDisplay	typeref:typename:void
+__anond99581270111	src/ogre_tile.cpp	/^{$/;"	n	file:
+convertImage	src/ogre_tile.cpp	/^QImage convertImage(QImage image)$/;"	f	namespace:__anond99581270111	typeref:typename:QImage
+uniqueTextureName	src/ogre_tile.cpp	/^std::string uniqueTextureName()$/;"	f	namespace:__anond99581270111	typeref:typename:std::string
+textureFromImage	src/ogre_tile.cpp	/^Ogre::TexturePtr textureFromImage(QImage image)$/;"	f	namespace:__anond99581270111	typeref:typename:Ogre::TexturePtr
+OgreTile	src/ogre_tile.cpp	/^OgreTile::OgreTile(QImage image_) : texture(textureFromImage(convertImage(std::move(image_))))$/;"	f	class:OgreTile
+detail	src/detail/tile_downloader.h	/^namespace detail$/;"	n
+TileDownloader	src/detail/tile_downloader.h	/^class TileDownloader : public QObject$/;"	c	namespace:detail
+manager	src/detail/tile_downloader.h	/^  QNetworkAccessManager* manager;$/;"	m	class:detail::TileDownloader	typeref:typename:QNetworkAccessManager *
+callback	src/detail/tile_downloader.h	/^  std::function<void(TileId, QImage)> callback;$/;"	m	class:detail::TileDownloader	typeref:typename:std::function<void (TileId,QImage)>
+error_rates	src/detail/tile_downloader.h	/^  detail::ErrorRateManager<std::string> error_rates;$/;"	m	class:detail::TileDownloader	typeref:typename:detail::ErrorRateManager<std::string>
+TileDownloader	src/detail/tile_downloader.h	/^  TileDownloader(decltype(callback) callback) : manager(new QNetworkAccessManager(this)), callba/;"	f	class:detail::TileDownloader
+loadTile	src/detail/tile_downloader.h	/^  void loadTile(TileId const& tile_id)$/;"	f	class:detail::TileDownloader	typeref:typename:void
+downloadFinished	src/detail/tile_downloader.h	/^  void downloadFinished(QNetworkReply* reply)$/;"	f	class:detail::TileDownloader	typeref:typename:void
+detail	src/detail/error_rate_manager.h	/^namespace detail$/;"	n
+ErrorRateManager	src/detail/error_rate_manager.h	/^struct ErrorRateManager$/;"	s	namespace:detail
+ErrorRate	src/detail/error_rate_manager.h	/^  struct ErrorRate$/;"	s	struct:detail::ErrorRateManager
+total_num	src/detail/error_rate_manager.h	/^    int total_num;$/;"	m	struct:detail::ErrorRateManager::ErrorRate	typeref:typename:int
+error_num	src/detail/error_rate_manager.h	/^    int error_num;$/;"	m	struct:detail::ErrorRateManager::ErrorRate	typeref:typename:int
+error_rates	src/detail/error_rate_manager.h	/^  std::unordered_map<T, ErrorRate> error_rates;$/;"	m	struct:detail::ErrorRateManager	typeref:typename:std::unordered_map<T,ErrorRate>
+calculate	src/detail/error_rate_manager.h	/^  float calculate(T const& id) const$/;"	f	struct:detail::ErrorRateManager	typeref:typename:float
+issueError	src/detail/error_rate_manager.h	/^  void issueError(T const& id)$/;"	f	struct:detail::ErrorRateManager	typeref:typename:void
+issueSuccess	src/detail/error_rate_manager.h	/^  void issueSuccess(T const& id)$/;"	f	struct:detail::ErrorRateManager	typeref:typename:void
+tileURL	src/tile_id.cpp	/^std::string tileURL(TileId const& tile_id)$/;"	f	typeref:typename:std::string
+operator ()	src/tile_id.cpp	/^size_t std::hash<TileId>::operator()(TileId const& tile_id) const$/;"	f	class:std::hash	typeref:typename:size_t
+WGSCoordinate	src/coordinates.h	/^struct WGSCoordinate$/;"	s
+lat	src/coordinates.h	/^  double lat, lon;$/;"	m	struct:WGSCoordinate	typeref:typename:double
+lon	src/coordinates.h	/^  double lat, lon;$/;"	m	struct:WGSCoordinate	typeref:typename:double
+TileCoordinateGeneric	src/coordinates.h	/^struct TileCoordinateGeneric$/;"	s
+x	src/coordinates.h	/^  NumericType x, y;$/;"	m	struct:TileCoordinateGeneric	typeref:typename:NumericType
+y	src/coordinates.h	/^  NumericType x, y;$/;"	m	struct:TileCoordinateGeneric	typeref:typename:NumericType
+fromWGSCoordinate	src/coordinates.h	/^TileCoordinateGeneric<NumericType> fromWGSCoordinate(WGSCoordinate coord, int zoom)$/;"	f	typeref:typename:TileCoordinateGeneric<NumericType>
+operator ==	src/coordinates.h	/^bool operator==(TileCoordinateGeneric<NumericType> self, TileCoordinateGeneric<NumericType> othe/;"	f	typeref:typename:bool
+operator >=	src/coordinates.h	/^bool operator>=(TileCoordinateGeneric<NumericType> self, TileCoordinateGeneric<NumericType> othe/;"	f	typeref:typename:bool
+operator <=	src/coordinates.h	/^bool operator<=(TileCoordinateGeneric<NumericType> self, TileCoordinateGeneric<NumericType> othe/;"	f	typeref:typename:bool
+TileCoordinate	src/coordinates.h	/^using TileCoordinate = TileCoordinateGeneric<int>;$/;"	t	typeref:typename:TileCoordinateGeneric<int>

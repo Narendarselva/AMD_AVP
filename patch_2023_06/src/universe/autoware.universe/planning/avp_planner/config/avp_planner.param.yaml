@@ -1,0 +1,8 @@
+/**:
+  ros__parameters:
+    # -- Node Configurations --
+    update_rate: 10.0
+    th_arrived_distance_m: 1.0
+    th_stopped_time_sec: 1.0
+    th_stopped_velocity_mps: 0.1
+    ego_stop_scale_factor: 5.0

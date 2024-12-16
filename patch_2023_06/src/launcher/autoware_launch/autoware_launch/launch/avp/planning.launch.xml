@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Essential parameters -->
+  <arg name="vehicle_model" description="vehicle model name"/>
+  <arg name="sensor_model" description="sensor model name"/>
+  <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+
+  <!-- Global parameters -->
+  <arg name="use_sim_time" default="false" description="use_sim_time"/>
+
+  <!-- NOTE: optional parameters are written here -->
+  <!-- PLANNING -->
+  <arg name="launch_avp_scenario" default="true" description="Use this to launch avp/apa scenario"/>
+  <arg name="launch_lane_driving" default="true" description="Use this to launch BH planner"/>
+  <arg name="launch_lane_driving_alone" default="false" description="Use this to launch only BH planner"/>
+
+  <!-- behavior -->
+  <arg name="use_experimental_lane_change_function" default="false"/>
+  <!-- motion -->
+  <arg name="cruise_planner_type" default="obstacle_stop_planner" description="options: obstacle_stop_planner, obstacle_cruise_planner, none"/>
+  <arg name="use_surround_obstacle_check" default="true"/>
+  <arg name="smoother_type" default="JerkFiltered" description="options: JerkFiltered, L2, Analytical, Linf(Unstable)"/>
+
+  <!-- variables -->
+  <arg name="behavior_config_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/behavior_planning"/>
+  <arg name="behavior_path_config_path" default="$(var behavior_config_path)/behavior_path_planner"/>
+  <arg name="behavior_velocity_config_path" default="$(var behavior_config_path)/behavior_velocity_planner"/>
+  <arg name="motion_config_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/lane_driving/motion_planning"/>
+  <arg name="common_config_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common"/>
+  <arg name="vehicle_param_file" default="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+
+  <!-- common -->
+  <arg name="common_param_path" default="$(var common_config_path)/common.param.yaml"/>
+  <arg name="nearest_search_param_path" default="$(var common_config_path)/nearest_search.param.yaml"/>
+
+  <!-- rtc -->
+  <arg name="rtc_auto_mode_manager_param_path" default="$(var behavior_config_path)/rtc_auto_mode_manager/rtc_auto_mode_manager.param.yaml"/>
+
+  <!-- mission planner -->
+  <arg name="mission_planner_param_path" default="$(find-pkg-share autoware_launch)/config/planning/mission_planning/mission_planner/mission_planner.param.yaml"/>
+  <!-- behavior path planner -->
+  <arg name="side_shift_param_path" default="$(var behavior_path_config_path)/side_shift/side_shift.param.yaml"/>
+  <arg name="avoidance_param_path" default="$(var behavior_path_config_path)/avoidance/avoidance.param.yaml"/>
+  <arg name="avoidance_by_lc_param_path" default="$(var behavior_path_config_path)/avoidance_by_lc/avoidance_by_lc.param.yaml"/>
+  <arg name="dynamic_avoidance_param_path" default="$(var behavior_path_config_path)/dynamic_avoidance/dynamic_avoidance.param.yaml"/>
+  <arg name="lane_change_param_path" default="$(var behavior_path_config_path)/lane_change/lane_change.param.yaml"/>
+  <arg name="goal_planner_param_path" default="$(var behavior_path_config_path)/goal_planner/goal_planner.param.yaml"/>
+  <arg name="pull_out_param_path" default="$(var behavior_path_config_path)/pull_out/pull_out.param.yaml"/>
+  <arg name="drivable_area_expansion_param_path" default="$(var behavior_path_config_path)/drivable_area_expansion.param.yaml"/>
+  <arg name="scene_module_manager_param_path" default="$(var behavior_path_config_path)/scene_module_manager.param.yaml"/>
+  <arg name="behavior_path_planner_tree_param_path" default="$(var behavior_path_config_path)/behavior_path_planner_tree.xml"/>
+  <arg name="behavior_path_planner_param_path" default="$(var behavior_path_config_path)/behavior_path_planner.param.yaml"/>
+  <!-- behavior velocity planner -->
+  <arg name="behavior_velocity_smoother_type_param_path" default="$(var common_config_path)/motion_velocity_smoother/Analytical.param.yaml"/>
+  <arg name="blind_spot_param_path" default="$(var behavior_velocity_config_path)/blind_spot.param.yaml"/>
+  <arg name="crosswalk_param_path" default="$(var behavior_velocity_config_path)/crosswalk.param.yaml"/>
+  <arg name="detection_area_param_path" default="$(var behavior_velocity_config_path)/detection_area.param.yaml"/>
+  <arg name="intersection_param_path" default="$(var behavior_velocity_config_path)/intersection.param.yaml"/>
+  <arg name="stop_line_param_path" default="$(var behavior_velocity_config_path)/stop_line.param.yaml"/>
+  <arg name="traffic_light_param_path" default="$(var behavior_velocity_config_path)/traffic_light.param.yaml"/>
+  <arg name="virtual_traffic_light_param_path" default="$(var behavior_velocity_config_path)/virtual_traffic_light.param.yaml"/>
+  <arg name="occlusion_spot_param_path" default="$(var behavior_velocity_config_path)/occlusion_spot.param.yaml"/>
+  <arg name="no_stopping_area_param_path" default="$(var behavior_velocity_config_path)/no_stopping_area.param.yaml"/>
+  <arg name="run_out_param_path" default="$(var behavior_velocity_config_path)/run_out.param.yaml"/>
+  <arg name="speed_bump_param_path" default="$(var behavior_velocity_config_path)/speed_bump.param.yaml"/>
+  <arg name="out_of_lane_param_path" default="$(var behavior_velocity_config_path)/out_of_lane.param.yaml"/>
+  <arg name="no_drivable_lane_param_path" default="$(var behavior_velocity_config_path)/no_drivable_lane.param.yaml"/>
+  <arg name="behavior_velocity_planner_param_path" default="$(var behavior_velocity_config_path)/behavior_velocity_planner.param.yaml"/>
+  <!-- parking -->
+  <arg name="freespace_planner_param_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/parking/freespace_planner/freespace_planner.param.yaml"/>
+
+  <!-- motion -->
+  <arg name="obstacle_avoidance_planner_param_path" default="$(var motion_config_path)/obstacle_avoidance_planner/obstacle_avoidance_planner.param.yaml"/>
+  <arg name="path_sampler_param_path" default="$(var motion_config_path)/path_sampler/path_sampler.param.yaml"/>
+  <arg name="obstacle_velocity_limiter_param_path" default="$(var motion_config_path)/obstacle_velocity_limiter/obstacle_velocity_limiter.param.yaml"/>
+  <arg name="surround_obstacle_checker_param_path" default="$(var motion_config_path)/surround_obstacle_checker/surround_obstacle_checker.param.yaml"/>
+  <arg name="obstacle_stop_planner_param_path" default="$(var motion_config_path)/obstacle_stop_planner/obstacle_stop_planner.param.yaml"/>
+  <arg name="obstacle_stop_planner_acc_param_path" default="$(var motion_config_path)/obstacle_stop_planner/adaptive_cruise_control.param.yaml"/>
+  <arg name="obstacle_cruise_planner_param_path" default="$(var motion_config_path)/obstacle_cruise_planner/obstacle_cruise_planner.param.yaml"/>
+  <arg name="smoother_type" default="$(var smoother_type)"/>
+
+  <!-- motion velocity smoother -->
+  <arg name="motion_velocity_smoother_param_path" default="$(var common_config_path)/motion_velocity_smoother/motion_velocity_smoother.param.yaml"/>
+  <arg name="smoother_type_param_path" default="$(var common_config_path)/motion_velocity_smoother/$(var smoother_type).param.yaml"/>
+
+  <!-- planning validator -->
+  <arg name="planning_validator_param_path" default="$(var common_config_path)/planning_validator/planning_validator.param.yaml"/>
+
+  <!-- avp planner -->
+  <arg name="avp_planner_param_path" default="$(find-pkg-share avp_planner)/config/avp_planner.param.yaml"/>
+  <!-- behavior path planner -->
+
+  <group scoped="false">
+    <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+  <!-- PLANNING AVP-->
+  <group if="$(var launch_avp_scenario)">
+    <group unless="$(var launch_lane_driving_alone)">
+      <push-ros-namespace namespace="planning"/>
+      <!-- mission planning module -->
+      <group>
+        <push-ros-namespace namespace="mission_planning"/>
+        <include file="$(find-pkg-share tier4_planning_launch)/launch/mission_planning/mission_planning.launch.xml">
+          <arg name="mission_planner_param_path" value="$(var mission_planner_param_path)"/>
+        </include>
+      </group>
+
+      <!-- scenario planning module -->
+      <group>
+        <push-ros-namespace namespace="scenario_planning"/>
+        <!-- scenario selector -->
+        <group>
+          <include file="$(find-pkg-share scenario_selector)/launch/scenario_selector.launch.xml">
+            <arg name="input_lane_driving_trajectory" value="/planning/scenario_planning/avp_planning/trajectory"/>
+            <arg name="input_parking_trajectory" value="/planning/scenario_planning/parking/trajectory"/>
+            <arg name="input_lanelet_map" value="/map/vector_map"/>
+            <arg name="input_route" value="/planning/mission_planning/route"/>
+            <arg name="input_odometry" value="/localization/kinematic_state"/>
+            <arg name="output_scenario" value="/planning/scenario_planning/scenario"/>
+            <arg name="output_trajectory" value="/planning/scenario_planning/scenario_selector/trajectory"/>
+          </include>
+        </group>
+
+        <!-- velocity planning with max velocity, acceleration, jerk, stop point constraint -->
+        <group>
+          <!-- external velocity limit selector -->
+          <group>
+            <include file="$(find-pkg-share external_velocity_limit_selector)/launch/external_velocity_limit_selector.launch.xml">
+              <arg name="common_param_path" value="$(var common_param_path)"/>
+              <arg name="param_path" value="$(var motion_velocity_smoother_param_path)"/>
+            </include>
+          </group>
+          <!-- motion velocity smoother -->
+          <group>
+            <set_remap from="~/input/trajectory" to="/planning/scenario_planning/scenario_selector/trajectory"/>
+            <set_remap from="~/output/trajectory" to="/planning/scenario_planning/motion_velocity_smoother/trajectory"/>
+            <include file="$(find-pkg-share motion_velocity_smoother)/launch/motion_velocity_smoother.launch.xml">
+              <arg name="smoother_type" value="$(var smoother_type)"/>
+              <arg name="common_param_path" value="$(var common_param_path)"/>
+              <arg name="nearest_search_param_path" value="$(var nearest_search_param_path)"/>
+              <arg name="param_path" value="$(var motion_velocity_smoother_param_path)"/>
+              <arg name="smoother_param_path" value="$(var smoother_type_param_path)"/>
+            </include>
+          </group>
+        </group>
+
+        <!-- scenarios-->
+        <group>
+          <!-- lane driving -->
+          <group if="$(var launch_lane_driving)">
+            <include file="$(find-pkg-share tier4_planning_launch)/launch/scenario_planning/lane_driving.launch.xml">
+              <arg name="common_param_path" value="$(var common_param_path)"/>
+              <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
+              <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+              <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+              <arg name="use_surround_obstacle_check" value="$(var use_surround_obstacle_check)"/>
+              <arg name="cruise_planner_type" value="$(var cruise_planner_type)"/>
+              <arg name="use_experimental_lane_change_function" value="$(var use_experimental_lane_change_function)"/>
+            </include>
+          </group>
+          <!-- parking -->
+          <group>
+            <include file="$(find-pkg-share tier4_planning_launch)/launch/scenario_planning/parking.launch.py">
+              <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
+            </include>
+          </group>
+        </group>
+      </group>
+
+      <!-- planning validator -->
+      <group>
+        <include file="$(find-pkg-share planning_validator)/launch/planning_validator.launch.xml">
+          <arg name="input_trajectory" value="/planning/scenario_planning/motion_velocity_smoother/trajectory"/>
+          <arg name="output_trajectory" value="/planning/scenario_planning/trajectory"/>
+          <arg name="planning_validator_param_path" value="$(var planning_validator_param_path)"/>
+        </include>
+      </group>
+
+      <!-- planning evaluator -->
+      <group>
+        <include file="$(find-pkg-share planning_evaluator)/launch/planning_evaluator.launch.xml"/>
+      </group>
+
+      <group>
+        <push-ros-namespace namespace="avp_planning"/>
+        <include file="$(find-pkg-share avp_planner)/launch/avp_planner.launch.xml">
+          <arg name="nearest_search_param_path" value="$(var nearest_search_param_path)"/>
+          <arg name="avp_planner_param_path" value="$(var avp_planner_param_path)"/>
+          <arg name="input_trajectory" value="/planning/scenario_planning/lane_driving/trajectory"/>
+          <arg name="output_trajectory" value="/planning/scenario_planning/avp_planning/trajectory"/>
+        </include>
+      </group>
+    </group>
+
+    <group if="$(var launch_lane_driving_alone)">
+      <push-ros-namespace namespace="planning"/>
+      <push-ros-namespace namespace="scenario_planning"/>
+      <include file="$(find-pkg-share tier4_planning_launch)/launch/scenario_planning/lane_driving.launch.xml">
+        <arg name="common_param_path" value="$(var common_param_path)"/>
+        <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
+        <arg name="use_pointcloud_container" value="$(var use_pointcloud_container)"/>
+        <arg name="pointcloud_container_name" value="$(var pointcloud_container_name)"/>
+        <arg name="use_surround_obstacle_check" value="$(var use_surround_obstacle_check)"/>
+        <arg name="cruise_planner_type" value="$(var cruise_planner_type)"/>
+        <arg name="use_experimental_lane_change_function" value="$(var use_experimental_lane_change_function)"/>
+      </include>
+    </group>
+  </group>
+
+  <!-- PLANNING APA-->
+  <group unless="$(var launch_avp_scenario)">
+    <push-ros-namespace namespace="planning"/>
+    <!-- mission planning module -->
+    <group>
+      <push-ros-namespace namespace="mission_planning"/>
+      <include file="$(find-pkg-share tier4_planning_launch)/launch/mission_planning/mission_planning.launch.xml">
+        <arg name="mission_planner_param_path" value="$(var mission_planner_param_path)"/>
+        <arg name="is_avp_scenario" value="false" />
+      </include>
+    </group>
+
+    <!-- scenario planning module -->
+    <group>
+      <push-ros-namespace namespace="scenario_planning"/>
+      <!-- velocity planning with max velocity, acceleration, jerk, stop point constraint -->
+      <group>
+        <!-- external velocity limit selector -->
+        <group>
+          <include file="$(find-pkg-share external_velocity_limit_selector)/launch/external_velocity_limit_selector.launch.xml">
+            <arg name="common_param_path" value="$(var common_param_path)"/>
+            <arg name="param_path" value="$(var motion_velocity_smoother_param_path)"/>
+          </include>
+        </group>
+        <!-- motion velocity smoother -->
+        <group>
+          <set_remap from="~/input/trajectory" to="/planning/scenario_planning/parking/trajectory"/>
+          <set_remap from="~/output/trajectory" to="/planning/scenario_planning/motion_velocity_smoother/trajectory"/>
+          <include file="$(find-pkg-share motion_velocity_smoother)/launch/motion_velocity_smoother.launch.xml">
+            <arg name="smoother_type" value="$(var smoother_type)"/>
+            <arg name="common_param_path" value="$(var common_param_path)"/>
+            <arg name="nearest_search_param_path" value="$(var nearest_search_param_path)"/>
+            <arg name="param_path" value="$(var motion_velocity_smoother_param_path)"/>
+            <arg name="smoother_param_path" value="$(var smoother_type_param_path)"/>
+          </include>
+        </group>
+      </group>
+
+      <!-- scenarios-->
+      <group>
+        <!-- parking -->
+        <group>
+          <include file="$(find-pkg-share tier4_planning_launch)/launch/scenario_planning/parking.launch.py">
+            <arg name="vehicle_param_file" value="$(var vehicle_param_file)"/>
+          </include>
+        </group>
+      </group>
+    </group>
+
+    <!-- planning validator -->
+    <group>
+      <include file="$(find-pkg-share planning_validator)/launch/planning_validator.launch.xml">
+        <arg name="input_trajectory" value="/planning/scenario_planning/motion_velocity_smoother/trajectory"/>
+        <arg name="output_trajectory" value="/planning/scenario_planning/trajectory"/>
+        <arg name="planning_validator_param_path" value="$(var planning_validator_param_path)"/>
+      </include>
+    </group>
+
+    <!-- planning evaluator -->
+    <group>
+      <include file="$(find-pkg-share planning_evaluator)/launch/planning_evaluator.launch.xml"/>
+    </group>
+  </group>
+
+</launch>

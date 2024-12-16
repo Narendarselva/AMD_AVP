@@ -1,0 +1,3 @@
+bool is_avp_triggered
+---
+autoware_adapi_v1_msgs/ResponseStatus status

@@ -1,0 +1,10 @@
+geometry_msgs/Point point1
+geometry_msgs/Point point2
+geometry_msgs/Point point3
+geometry_msgs/Point point4
+uint8 slot_id
+uint8 direction
+uint8 type
+uint8 available_state
+float32 angle
+float32 slot_theta

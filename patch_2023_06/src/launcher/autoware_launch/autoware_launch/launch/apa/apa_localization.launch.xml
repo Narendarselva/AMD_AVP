@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Essential parameters -->
+  <arg name="vehicle_model" description="vehicle model name"/>
+  <arg name="sensor_model" description="sensor model name"/>
+
+  <arg name="launch_vehicle" default="false" description="launch vehicle module"/>
+  <arg name="launch_system" default="false" description="launch system module"/>
+  <arg name="launch_simulator" default="false" description="launch simulation module"/>
+  <arg name="launch_planning" default="false" description="launch planning module"/>
+  <arg name="launch_control" default="false" description="launch control module"/>
+  <arg name="launch_api" default="false" description="launch api module"/>
+  <arg name="launch_viz" default="false" description="launch vizualization module"/>
+  <arg name="launch_sensing" default="false" description="launch sensing module"/>
+  <arg name="launch_localization" default="false" description="launch localization module"/>
+  <arg name="launch_joy" default="false" description="launch joystick controller module"/>
+  <arg name="launch_perception" default="false" description="launch perception module"/>
+
+  <!-- Optional parameters -->
+  <!-- Map -->
+  <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
+  <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <!-- Tools -->
+  <arg name="rviz" default="true" description="launch rviz"/>
+  <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/apa.rviz" description="rviz config"/>
+  <!-- Control -->
+  <arg name="enable_obstacle_collision_checker" default="false" description="use obstacle_collision_checker"/>
+  <arg name="check_external_emergency_heartbeat" default="false"/>
+  <!-- Scenario simulation -->
+  <arg name="initial_engage_state" default="true" description="/vehicle/engage state after starting Autoware"/>
+  <arg name="perception/enable_detection_failure" default="true" description="enable to simulate detection failure when using dummy perception"/>
+  <arg name="perception/enable_object_recognition" default="true" description="enable object recognition when using dummy perception"/>
+  <arg name="sensing/visible_range" default="300.0" description="visible range when using dummy perception"/>
+  <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
+  <!-- Vcu emulation -->
+  <arg name="vehicle_simulation" default="false" description="use vehicle simulation"/>
+  <arg name="vehicle_id" default="0"/>
+  <!--Planning-->
+  <arg name="common_param_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml"/>
+  <arg name="nearest_search_param_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml"/>
+  <arg name="motion_velocity_smoother_param_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/motion_velocity_smoother/motion_velocity_smoother.param.yaml"/>
+  <arg name="tier4_planning_launch_param_path" default="$(find-pkg-share tier4_planning_launch)/config"/>	
+  <!-- System -->
+  <arg name="system_run_mode" default="apa" description="run mode in system"/>
+  <arg name="launch_system_monitor" default="true" description="launch system monitor"/>
+  <arg name="launch_system_error_monitor" default="true" description="launch system error monitor"/>
+  <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
+  <!--sensing-->
+  <arg name="coordinate_system" default="1" description="0:UTM, 1:MGRS, 2:PLANE"/>
+  <arg name="gnss_ip" default="192.168.74.1" description="Gnss IP"/>
+  <!--localization-->
+  <arg name="localization_error_monitor_param_path" default="$(find-pkg-share autoware_launch)/config/localization/localization_error_monitor.param.yaml"/>
+  <arg name="pose_initializer_common_param_path" default="$(find-pkg-share autoware_launch)/config/localization/pose_initializer_common.param.yaml"/>
+  <arg name="pose_initializer_param_path" default="$(find-pkg-share autoware_launch)/config/localization/pose_initializer.param.yaml"/>
+  <arg name="launch_localization_error_monitor" default="true" description="launch localization error monitor" />
+  <!-- API -->
+  <arg name="launch_default_ad_api" default="true"/>
+  <arg name="launch_rviz_adaptors" default="true"/>
+
+
+  <!-- Global parameters -->
+  <group scoped="false">
+    <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="false"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+  <!-- localization -->
+    <group if="$(var launch_localization)">
+
+	    <push-ros-namespace namespace="localization"/>
+	    <group unless="$(var vehicle_simulation)">
+
+		    <!-- pose_initializer -->
+		    <group>
+          <include file="$(find-pkg-share pose_initializer)/launch/pose_initializer.launch.xml">
+            <arg name="ndt_enabled" value="false"/>
+            <arg name="gnss_enabled" value="true"/>
+            <arg name="ekf_enabled" value="false"/>
+            <arg name="yabloc_enabled" value="false"/>
+            <arg name="stop_check_enabled" value="false"/>
+				    <arg name="config_file" value="$(var pose_initializer_param_path)"/>
+				    <arg name="sub_gnss_pose_cov" value="/sensing/gnss/pose_with_covariance"/>
+			    </include>
+		    </group>
+
+		    <!-- pose_initializer (Automatic call from AD API) -->
+		    <group>
+			    <include file="$(find-pkg-share automatic_pose_initializer)/launch/automatic_pose_initializer.launch.xml"/>
+		    </group>
+
+		    <group>
+			    <include file="$(find-pkg-share stop_filter)/launch/stop_filter.launch.xml">
+				    <arg name="use_twist_with_covariance" value="False"/>
+				    <arg name="input_odom_name" value="/sensing/gnss/odom"/>
+				    <arg name="output_odom_name" value="/localization/kinematic_state"/>
+			    </include>
+		    </group>
+
+		    <group>
+			    <include file="$(find-pkg-share twist2accel)/launch/twist2accel.launch.xml">
+				    <arg name="use_odom" value="true"/>
+				    <arg name="in_odom" value="/localization/kinematic_state"/>
+				    <arg name="in_twist" value="/localization/twist_estimator/twist_with_covariance"/>
+				    <arg name="out_accel" value="/localization/acceleration"/>
+			    </include>
+		    </group>
+	    </group>
+
+	    <!-- localization_error_monitor_module -->
+	    <group if="$(var launch_localization_error_monitor)">
+		    <include file="$(find-pkg-share tier4_localization_launch)/launch/localization_error_monitor/localization_error_monitor.launch.xml"/>
+	    </group>
+    </group>
+
+</launch>

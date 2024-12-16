@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Essential parameters -->
+  <arg name="vehicle_model" description="vehicle model name"/>
+  <arg name="sensor_model" description="sensor model name"/>
+  <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+  <arg name="coordinate_system" default="1" description="0:UTM, 1:MGRS, 2:PLANE"/>
+
+  <!-- Global parameters -->
+  <arg name="use_sim_time" default="false" description="use_sim_time"/>
+
+  <group scoped="false">
+    <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+  <!-- sensing -->
+  <group>
+    <push-ros-namespace namespace="sensing"/>
+    <!-- GNSS -->
+    <group>
+      <push-ros-namespace namespace="gnss"/>
+      <!-- Switch topic name -->
+      <let name="navsatfix_topic_name" value="novatel/oem7/fix"/>
+      <let name="odom_topic_name" value="novatel/oem7/odom"/>
+      <let name="orientation_topic_name" value="/autoware_orientation"/>
+
+      <!-- Novatel Driver -->
+      <group>
+        <include file="$(find-pkg-share novatel_oem7_driver)/launch/oem7_net.launch.py">
+          <arg name="oem7_ip_addr" value="$(var gnss_ip)"/>
+          <arg name="oem7_port" value="3003"/>
+          <arg name="oem7_if" value="Oem7ReceiverUdp"/>
+        </include>
+      </group>
+
+      <!-- NavSatFix to MGRS Pose -->
+      <include file="$(find-pkg-share gnss_poser)/launch/gnss_poser.launch.xml">
+        <arg name="input_topic_fix" value="$(var navsatfix_topic_name)"/>
+        <arg name="input_topic_odom" value="$(var odom_topic_name)"/>
+        <arg name="input_topic_orientation" value="$(var orientation_topic_name)"/>
+
+        <arg name="output_topic_gnss_pose" value="pose"/>
+        <arg name="output_topic_gnss_pose_cov" value="pose_with_covariance"/>
+        <arg name="output_topic_gnss_fixed" value="fixed"/>
+        <arg name="output_topic_gnss_odom" value="odom"/>
+
+        <arg name="coordinate_system" value="$(var coordinate_system)"/>
+        <arg name="use_gnss_ins_orientation" value="true"/>
+
+        <arg name="gnss_frame" value="gnss_link"/>
+      </include>
+    </group>
+
+    <!-- Uls -->
+    <group if="$(var launch_uls)">
+      <push-ros-namespace namespace="ultrasonics"/>
+      <group>
+      <push-ros-namespace namespace="valeo"/>
+        <include file="$(find-pkg-share valeo_uls_transmitter)/launch/run_foxy_or_galactic_can.launch.py">
+        </include>
+      </group>
+    </group>
+
+  </group>
+
+</launch>

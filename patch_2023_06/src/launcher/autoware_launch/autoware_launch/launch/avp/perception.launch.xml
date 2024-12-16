@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Essential parameters -->
+  <arg name="vehicle_model" description="vehicle model name"/>
+  <arg name="sensor_model" description="sensor model name"/>
+  <arg name="perception/enable_detection_failure" default="true" description="enable to simulate detection failure when using dummy perception"/>
+  <arg name="perception/enable_object_recognition" default="false" description="enable object recognition when using dummy perception"/>
+  <arg name="sensing/visible_range" default="300.0" description="visible range when using dummy perception"/>
+  <arg name="use_simulated_parking" default="true" description="use dummpy simulated parking lots"/>
+
+  <!-- Global parameters -->
+  <arg name="use_sim_time" default="false" description="use_sim_time"/>
+
+  <group scoped="false">
+    <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+  <!-- Perception -->
+  <group>
+    <group if="$(var launch_motovis_perception)">
+      <include file="$(find-pkg-share motovis_interface)/launch/motovis_interface.launch.xml">
+        <arg name="use_simulated_parking" value="$(var use_simulated_parking)"/>
+      </include>
+    </group>
+
+    <!-- Dummy APA perception-->
+    <group if="$(var launch_dummy_apa_perception)">
+      <!-- launched only when its not simulation because in simulation dummy percpetion is already
+      launched-->
+      <include file="$(find-pkg-share dummy_perception_publisher)/launch/dummy_perception_publisher.launch.xml">
+        <arg name="real" value="$(var perception/enable_detection_failure)"/>
+        <arg name="use_object_recognition" value="$(var perception/enable_object_recognition)"/>
+        <arg name="visible_range" value="$(var sensing/visible_range)"/>
+      </include>
+
+      <!-- publish empty objects instead of object recognition module -->
+      <group unless="$(var perception/enable_object_recognition)">
+        <push-ros-namespace namespace="object_recognition"/>
+        <node pkg="dummy_perception_publisher" exec="empty_objects_publisher" name="empty_objects_publisher" output="screen">
+          <remap from="~/output/objects" to="/perception/object_recognition/objects"/>
+        </node>
+      </group>
+
+      <!-- Occupancy Grid -->
+      <push-ros-namespace namespace="occupancy_grid_map"/>
+      <include file="$(find-pkg-share probabilistic_occupancy_grid_map)/launch/laserscan_based_occupancy_grid_map.launch.py">
+        <arg name="input_obstacle_pointcloud" value="true"/>
+        <arg name="input_obstacle_and_raw_pointcloud" value="false"/>
+        <arg name="input/obstacle_pointcloud" value="/perception/obstacle_segmentation/pointcloud"/>
+        <arg name="output" value="/perception/occupancy_grid_map/map"/>
+      </include>
+    </group>
+  </group>
+
+</launch>

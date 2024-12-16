@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Global parameters -->
+  <group scoped="false">
+    <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="false"/>
+      <arg name="vehicle_model" value="lexus"/>
+    </include>
+  </group>
+
+  <include file="$(find-pkg-share motovis_interface)/launch/motovis_interface.launch.xml"/>
+
+</launch>

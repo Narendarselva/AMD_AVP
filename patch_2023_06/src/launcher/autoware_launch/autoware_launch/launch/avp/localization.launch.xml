@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Essential parameters -->
+  <arg name="vehicle_model" description="vehicle model name"/>
+  <arg name="sensor_model" description="sensor model name"/>
+  <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+
+  <!-- Global parameters -->
+  <arg name="use_sim_time" default="false" description="use_sim_time"/>
+
+  <!-- Localization params -->
+  <arg name="localization_error_monitor_param_path" default="$(find-pkg-share autoware_launch)/config/localization/localization_error_monitor.param.yaml"/>
+  <arg name="pose_initializer_common_param_path" default="$(find-pkg-share autoware_launch)/config/localization/pose_initializer_common.param.yaml"/>
+  <arg name="pose_initializer_param_path" default="$(find-pkg-share autoware_launch)/config/localization/pose_initializer.param.yaml"/>
+  <arg name="launch_localization_error_monitor" default="true" description="launch localization error monitor" />
+
+  <group scoped="false">
+    <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+  <!-- LOCALIZATION -->
+  <group>
+    <push-ros-namespace namespace="localization"/>
+    <!-- pose_initializer -->
+    <group>
+      <include file="$(find-pkg-share pose_initializer)/launch/pose_initializer.launch.xml">
+        <arg name="common_config_file" value="$(var pose_initializer_common_param_path)"/>
+        <arg name="config_file" value="$(var pose_initializer_param_path)"/>
+        <arg name="sub_gnss_pose_cov" value="/sensing/gnss/pose_with_covariance"/>
+      </include>
+    </group>
+
+    <!-- pose_initializer (Automatic call from AD API) -->
+    <group>
+      <include file="$(find-pkg-share automatic_pose_initializer)/launch/automatic_pose_initializer.launch.xml"/>
+    </group>
+
+    <group>
+      <include file="$(find-pkg-share stop_filter)/launch/stop_filter.launch.xml">
+        <arg name="use_twist_with_covariance" value="False"/>
+        <arg name="input_odom_name" value="/sensing/gnss/odom"/>
+        <arg name="output_odom_name" value="/localization/kinematic_state"/>
+      </include>
+    </group>
+
+    <group>
+      <include file="$(find-pkg-share twist2accel)/launch/twist2accel.launch.xml">
+        <arg name="use_odom" value="true"/>
+        <arg name="in_odom" value="/localization/kinematic_state"/>
+        <arg name="in_twist" value="/localization/twist_estimator/twist_with_covariance"/>
+        <arg name="out_accel" value="/localization/acceleration"/>
+      </include>
+    </group>
+
+    <!-- localization_error_monitor_module -->
+    <group if="$(var launch_localization_error_monitor)">
+      <include file="$(find-pkg-share tier4_localization_launch)/launch/localization_error_monitor/localization_error_monitor.launch.xml"/>
+    </group>
+  </group>
+
+</launch>

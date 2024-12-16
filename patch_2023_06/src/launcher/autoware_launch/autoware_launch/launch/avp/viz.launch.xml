@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Essential parameters -->
+  <arg name="vehicle_model" description="vehicle model name"/>
+  <arg name="sensor_model" description="sensor model name"/>
+  <arg name="use_pointcloud_container" default="false" description="launch pointcloud container"/>
+  <arg name="pointcloud_container_name" default="pointcloud_container"/>
+
+  <!-- Global parameters -->
+  <arg name="use_sim_time" default="false" description="use_sim_time"/>
+
+  <!-- Viz -->
+  <arg name="rviz" default="true" description="launch rviz"/>
+  <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/avp.rviz" description="rviz config"/>
+
+  <group scoped="false">
+    <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+    <!-- Joystick controller -->
+  <group if="$(var launch_joy)">
+    <include file="$(find-pkg-share joy_controller)/launch/joy_controller.launch.xml"/>
+  </group>
+
+  <!-- Rviz -->
+  <group if="$(var launch_viz)">
+    <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" args="-d $(var rviz_config) -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png" if="$(var rviz)"/>
+  </group>
+
+  <group if="$(var launch_topic_monitor)">
+    <!--RQT Robot Monitor -->
+    <node pkg="rqt_robot_monitor" exec="rqt_robot_monitor" name="rqt_robot_monitor" output="screen"/>
+  </group>
+
+</launch>

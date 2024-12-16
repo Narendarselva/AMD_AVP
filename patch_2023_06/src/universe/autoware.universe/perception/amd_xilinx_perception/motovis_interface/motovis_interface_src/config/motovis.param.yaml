@@ -1,0 +1,8 @@
+/**:
+  ros__parameters:
+    # -- Node Configurations --
+    update_rate: 10.0
+    num_of_cams: 4
+    share_bev_to_disti_hmi: false
+    use_vehicle_overlay_on_bev: true
+    publish_bev: true

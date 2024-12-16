@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Essential parameters -->
+  <arg name="vehicle_model" description="vehicle model name"/>
+  <arg name="sensor_model" description="sensor model name"/>
+
+  <arg name="launch_vehicle" default="false" description="launch vehicle module"/>
+  <arg name="launch_system" default="false" description="launch system module"/>
+  <arg name="launch_simulator" default="false" description="launch simulation module"/>
+  <arg name="launch_planning" default="false" description="launch planning module"/>
+  <arg name="launch_control" default="false" description="launch control module"/>
+  <arg name="launch_api" default="false" description="launch api module"/>
+  <arg name="launch_viz" default="false" description="launch vizualization module"/>
+  <arg name="launch_sensing" default="false" description="launch sensing module"/>
+  <arg name="launch_localization" default="false" description="launch localization module"/>
+  <arg name="launch_joy" default="false" description="launch joystick controller module"/>
+  <arg name="launch_perception" default="false" description="launch perception module"/>
+
+  <!-- Optional parameters -->
+  <!-- Map -->
+  <arg name="lanelet2_map_file" default="lanelet2_map.osm" description="lanelet2 map file name"/>
+  <arg name="pointcloud_map_file" default="pointcloud_map.pcd" description="pointcloud map file name"/>
+  <!-- Tools -->
+  <arg name="rviz" default="true" description="launch rviz"/>
+  <arg name="rviz_config" default="$(find-pkg-share autoware_launch)/rviz/apa.rviz" description="rviz config"/>
+  <!-- Control -->
+  <arg name="enable_obstacle_collision_checker" default="false" description="use obstacle_collision_checker"/>
+  <arg name="check_external_emergency_heartbeat" default="false"/>
+  <!-- Scenario simulation -->
+  <arg name="initial_engage_state" default="true" description="/vehicle/engage state after starting Autoware"/>
+  <arg name="perception/enable_detection_failure" default="true" description="enable to simulate detection failure when using dummy perception"/>
+  <arg name="perception/enable_object_recognition" default="true" description="enable object recognition when using dummy perception"/>
+  <arg name="sensing/visible_range" default="300.0" description="visible range when using dummy perception"/>
+  <arg name="scenario_simulation" default="false" description="use scenario simulation"/>
+  <!-- Vcu emulation -->
+  <arg name="vehicle_simulation" default="false" description="use vehicle simulation"/>
+  <arg name="vehicle_id" default="0"/>
+  <!--Planning-->
+  <arg name="common_param_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/common.param.yaml"/>
+  <arg name="nearest_search_param_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/nearest_search.param.yaml"/>
+  <arg name="motion_velocity_smoother_param_path" default="$(find-pkg-share autoware_launch)/config/planning/scenario_planning/common/motion_velocity_smoother/motion_velocity_smoother.param.yaml"/>
+  <arg name="tier4_planning_launch_param_path" default="$(find-pkg-share tier4_planning_launch)/config"/>	
+  <!-- System -->
+  <arg name="system_run_mode" default="apa" description="run mode in system"/>
+  <arg name="launch_system_monitor" default="true" description="launch system monitor"/>
+  <arg name="launch_system_error_monitor" default="true" description="launch system error monitor"/>
+  <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
+  <!--sensing-->
+  <arg name="coordinate_system" default="1" description="0:UTM, 1:MGRS, 2:PLANE"/>
+  <arg name="gnss_ip" default="192.168.74.1" description="Gnss IP"/>
+  <!--localization-->
+  <arg name="localization_error_monitor_param_path" default="$(find-pkg-share autoware_launch)/config/localization/localization_error_monitor.param.yaml"/>
+  <arg name="pose_initializer_common_param_path" default="$(find-pkg-share autoware_launch)/config/localization/pose_initializer_common.param.yaml"/>
+  <arg name="pose_initializer_param_path" default="$(find-pkg-share autoware_launch)/config/localization/pose_initializer.planning_simulator.param.yaml"/>
+  <arg name="launch_localization_error_monitor" default="true" description="launch localization error monitor" />
+  <!-- API -->
+  <arg name="launch_default_ad_api" default="true"/>
+  <arg name="launch_rviz_adaptors" default="true"/>
+
+
+  <!-- Global parameters -->
+  <group scoped="false">
+    <include file="$(find-pkg-share global_parameter_loader)/launch/global_params.launch.py">
+      <arg name="use_sim_time" value="false"/>
+      <arg name="vehicle_model" value="$(var vehicle_model)"/>
+    </include>
+  </group>
+
+  <!-- Control -->
+  <group if="$(var launch_control)">
+      <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_control_component.launch.xml">
+      <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
+      <arg name="vehicle_id" value="$(var vehicle_id)"/>
+      <arg name="enable_obstacle_collision_checker" value="$(var enable_obstacle_collision_checker)"/>
+      <arg name="lateral_controller_mode" value="mpc"/>
+      <arg name="longitudinal_controller_mode" value="pid"/>
+      <arg name="use_individual_control_param" value="false"/>
+    </include>
+  </group>
+
+</launch>

@@ -1,0 +1,17 @@
+/**:
+  ros__parameters:
+    sensing:
+      type: diagnostic_aggregator/AnalyzerGroup
+      path: sensing
+      analyzers:
+        node_alive_monitoring:
+          type: diagnostic_aggregator/AnalyzerGroup
+          path: node_alive_monitoring
+          analyzers:
+            # TODO(Tier IV): Consider splitting sensor input and control command output
+            topic_status:
+              type: diagnostic_aggregator/GenericAnalyzer
+              path: topic_status
+              contains: [": sensing_topic_status"]
+              timeout: 1.0
+

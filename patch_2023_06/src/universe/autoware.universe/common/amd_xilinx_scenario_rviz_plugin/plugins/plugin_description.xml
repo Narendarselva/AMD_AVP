@@ -1,0 +1,9 @@
+<library path="amd_xilinx_scenario_rviz_plugin">
+
+  <class
+    type="rviz_plugins::AmdScenarioPanel"
+    base_class_type="rviz_common::Panel">
+    <description>AmdScenarioPanel</description>
+  </class>
+
+</library>

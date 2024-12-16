@@ -1,0 +1,14 @@
+<launch>
+  <arg name="avp_planner_param_path" default="$(find-pkg-share avp_planner)/config/avp_planner.param.yaml"/>
+  <arg name="nearest_search_param_path"/>
+  <!-- input/output -->
+  <arg name="input_trajectory" default="/planning/scenario_planning/lane_driving/trajectory"/>
+  <arg name="output_trajectory" default="/planning/scenario_planning/avp_planning/trajectory"/>
+
+  <node pkg="avp_planner" exec="avp_planner" name="avp_planner" output="screen">
+    <param from="$(var avp_planner_param_path)"/>
+    <param from="$(var nearest_search_param_path)"/>
+    <remap from="~/input/trajectory" to="$(var input_trajectory)"/>
+    <remap from="~/output/trajectory" to="$(var output_trajectory)"/>
+  </node>
+</launch>

@@ -1,0 +1,7 @@
+<library path="amd_xilinx_parking_lot_select_rviz_plugin">
+  <class name="rviz_plugins/AmdXilinxParkingLotSelectTool"
+    type="rviz_plugins::AmdXilinxParkingLotSelectTool"
+    base_class_type="rviz_common::Tool">
+    <description>AmdXilinxParkingLotSelectTool</description>
+  </class>
+</library>

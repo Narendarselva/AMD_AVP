@@ -1,0 +1,15 @@
+<launch>
+  <arg name="use_simulated_parking" default="true"/>
+  <arg name="vehicle_png_file" default="$(find-pkg-share motovis_interface)/config/vehicle_overlay.png"/>
+  <arg name="background_png_file" default="$(find-pkg-share motovis_interface)/config/background.png"/>
+  <arg name="motovis_param_path" default="$(find-pkg-share motovis_interface)/config/motovis.param.yaml"/>
+
+  <node pkg="motovis_interface" exec="motovis_interface" name="motovis_interface" output="screen">
+	  <remap from="~/debug/polygon" to="/perception/motovis/freespace/debug/polygon"/>
+    <remap from="~/debug/marker_array" to="/perception/motovis/parkinglot/debug/marker_array"/>
+    <param name="use_simulated_parking" value="$(var use_simulated_parking)"/>
+    <param name="background_png_file" value="$(var background_png_file)"/>
+    <param name="vehicle_png_file" value="$(var vehicle_png_file)"/>
+    <param from="$(var motovis_param_path)" />
+  </node>
+</launch>
